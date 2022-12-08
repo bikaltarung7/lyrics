@@ -1,0 +1,12 @@
+A = LOAD '/user/maria_dev/data/CharliePuth.csv' USING PigStorage(',') 
+	AS (Id:int,Artist:chararray,Title:chararray,Album:chararray,Year:chararray,Date:chararray,Lyric:chararray);
+
+B = FILTER A BY Artist!='Artist';
+
+C = FOREACH A GENERATE Artist, Album, Title, Year, FLATTEN(TOKENIZE(Lyric)) AS word;
+
+D = GROUP C BY (Artist, Album, Title, Year, word);
+
+E = FOREACH D GENERATE FLATTEN(group), COUNT(C) AS sum;
+
+STORE E into '/user/maria_dev/lyrics/';

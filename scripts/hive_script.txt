@@ -1,0 +1,12 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS lyrics(
+	artist string,
+	album string,
+	title string,
+	year int,
+	word	string,
+	word_count int	
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE
+LOCATION '/user/maria_dev/lyrics';
